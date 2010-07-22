@@ -1,19 +1,21 @@
 # Maintainer: James Pearson <james.m.pearson+arch@gmail.com>
 
 pkgname=python-easygui
-pkgver=0.93
-pkgrel=2
+pkgver=0.95
+pkgrel=1
 pkgdesc="A module for very simple, very easy GUI programming in Python"
 url="http://easygui.sourceforge.net"
 license=('CCPL')
 arch=('any')
 depends=('python' 'tk')
 makedepends=('setuptools')
-source=(http://easygui.sourceforge.net/current_version/easygui_v$pkgver.tar.gz)
-md5sums=('764af8a7121751289284957133244867')
+source=(http://easygui.sourceforge.net/download/current_version/easygui_v$pkgver.tar.gz)
+md5sums=('45aac917f91d1378b4e74027dbf21b75')
 
 build() {
-	install -d ${pkgdir}$(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
-	install -m644 easygui.py ${pkgdir}$(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")
+	cd $startdir/src/
+	python setup.py install --root=$startdir/pkg
+	
 	install -Dm644 easygui.html $pkgdir/usr/share/doc/$pkgname/easygui.html
+	install -D -m644 easygui_license_info.txt ${pkgdir}/usr/share/licenses/${pkgname}/LICENSE
 }
